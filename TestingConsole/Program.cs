@@ -37,15 +37,19 @@ namespace TestingConsole
                 }
             }
 
+            
             Console.WriteLine("Данные с критическими температурами: ");
             SensorData.PrintList(warningTemperature);
 
+            Sensor.PrintCriticalTemperatures(sensorList, 0);
             Console.WriteLine("Все данные первого датчика: ");
             SensorData.PrintTemperatures(allData, 0);
 
+            Sensor.PrintCriticalTemperatures(sensorList, 1);
             Console.WriteLine("Все данные второго датчика: ");
             SensorData.PrintTemperatures(allData, 1);
 
+            Sensor.PrintCriticalTemperatures(sensorList, 2);
             Console.WriteLine("Все данные третьего датчика: ");
             SensorData.PrintTemperatures(allData, 2);
         }
@@ -94,6 +98,12 @@ namespace TestingConsole
         {
             Random rnd = new Random();
             CurrentTemp = rnd.Next(minValue, maxValue);
+        }
+
+        public static void PrintCriticalTemperatures(List<Sensor> list, int sensorId)
+        {
+            Console.WriteLine($"Минимальная температура датчика {list[sensorId].Name} : {list[sensorId].MinTemp}");
+            Console.WriteLine($"Максимальная температура датчика {list[sensorId].Name} : {list[sensorId].MaxTemp}");
         }
     }
 
