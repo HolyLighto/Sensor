@@ -13,7 +13,7 @@ namespace TestingConsole
             //количество итераций для каждого из датчиков
             int iterationCount = 10;
             //Список(массив) датчиков, создаем 3 штуки
-            List<Sensor> sensorList = Sensor.FillList(sensorCount); 
+            List<Sensor> sensorList = Sensor.FillList(sensorCount);
             //Список показаний датчиков, когда температура была предельной(сохраняется название датчика и температура. которая была)
             List<SensorData> warningTemperature = new List<SensorData>();
             //Двумерный массив, в котором будут храниться все показания. 3 датчика и 10 значений у каждого в данном случае
@@ -36,6 +36,18 @@ namespace TestingConsole
                     allData[i, j] = new SensorData(sensorList[j]);
                 }
             }
+
+            Console.WriteLine("Данные с критическими температурами: ");
+            SensorData.PrintList(warningTemperature);
+
+            Console.WriteLine("Все данные первого датчика: ");
+            SensorData.PrintTemperatures(allData, 0);
+
+            Console.WriteLine("Все данные второго датчика: ");
+            SensorData.PrintTemperatures(allData, 1);
+
+            Console.WriteLine("Все данные третьего датчика: ");
+            SensorData.PrintTemperatures(allData, 2);
         }
     }
 
@@ -66,7 +78,7 @@ namespace TestingConsole
         {
             Random rnd = new Random();
             List<Sensor> list = new List<Sensor>();
-            for(int i = 1; i < count+1; i++)
+            for (int i = 1; i < count + 1; i++)
             {
                 list.Add(new Sensor($"Датчик{i}", rnd.Next(0, 10), rnd.Next(30, 50)));
             }
@@ -97,6 +109,28 @@ namespace TestingConsole
         {
             Name = sens.Name;
             Temp = sens.CurrentTemp;
+        }
+
+        public override string ToString()
+        {
+            return $"{Name} : {Temp}°С";
+        }
+
+        public static void PrintList(List<SensorData> list)
+        {
+            foreach (var sensor in list)
+            {
+                Console.WriteLine($"{sensor}, ");
+            }
+        }
+
+        public static void PrintTemperatures(SensorData[,] data, int rowNumber)
+        {
+            for (int i = 0; i < data.GetLength(0); i++)
+            {
+                Console.Write($"{data[i, rowNumber].Temp}°С, ");
+            }
+            Console.WriteLine();
         }
     }
 }
