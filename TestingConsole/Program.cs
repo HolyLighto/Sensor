@@ -37,6 +37,8 @@ namespace TestingConsole
                 }
             }
 
+
+
             
             Console.WriteLine("Данные с критическими температурами: ");
             SensorData.PrintList(warningTemperature);
